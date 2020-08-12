@@ -12,8 +12,8 @@
 - [Run Junits](#run-junits)
 - [Spring Profile](#spring-profile)
 - [Local Run](#local-run)
-- [Swagger Page](#swagger-page)
 - [Supported Query Parameters by Search Service](#supported-query-parameters-by-search-service)
+- [Swagger Page](#swagger-page)
 
 
 ## Description
@@ -21,8 +21,7 @@ Rest interface that allows searching of handset details by providing required cr
 
 ## Architecture and Pattern
 
-- This service developed using Spring Boot which allows easy injection of dependent objects.
-
+- This service developed using Spring Boot which allows easy injection of dependent objects. Internally uses Spring RestTemplate to fetch details details service.
 <br/>
 
 ## Endpoints and URL
@@ -30,7 +29,6 @@ Rest interface that allows searching of handset details by providing required cr
 | Method | Endpoint       |
 | ------ | -------------- |
 | GET    | /mobile/search?|
-
 <br/>
 
 ## Response Codes
@@ -69,6 +67,8 @@ run JUnits, then use below command(Please note as this will internally call `jac
 
 `gradle.bat test`
 
+Reports for tests can be found under `build/reports/tests/test` and jacoco code coverage under  `build/reports/jacoco/test/html`
+
 ## Spring Profile
 
 Implemented to use Spring Profile capability to map our beans to different profiles based on different environments. In this API, it uses local and prod profiles and other profiles can be added as required.  
@@ -86,11 +86,6 @@ Running below commands start the service on port 8080 by default which can be ch
 
  `java -jar -Dspring.profiles.active=local -Dserver.port=8081 handset-details-api.jar`
  
-
-## Swagger Page 
-
-Once the API is up and running you can find Swagger JSON document http://`HOST_NAME`:`PORT`/v2/api-docs
-
 ## Supported Query Parameters by Search Service
 
 | Parameter Name |
@@ -106,3 +101,9 @@ Once the API is up and running you can find Swagger JSON document http://`HOST_N
 | priceEur       |
 | resolution     |
 | sim            |
+
+## Swagger Page 
+
+Once the API is up and running you can find Swagger JSON document http://`HOST_NAME`:`PORT`/v2/api-docs
+
+
