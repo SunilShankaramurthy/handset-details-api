@@ -9,17 +9,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PictureCommand implements Command {
+public class BrandFilterCommand implements Command {
 
   @Override
   public List<Handset> execute(List<Handset> handsetList, Map<String, String> queryParams) {
-    List<Handset> list =
-        handsetList.stream()
-            .filter(
-                p ->
-                    StringUtils.containsIgnoreCase(
-                        p.getPicture(), queryParams.get(Constants.PICTURE)))
-            .collect(Collectors.toList());
-    return list;
+    return handsetList.stream()
+        .filter(p -> StringUtils.containsIgnoreCase(p.getBrand(), queryParams.get(Constants.BRAND)))
+        .collect(Collectors.toList());
   }
 }

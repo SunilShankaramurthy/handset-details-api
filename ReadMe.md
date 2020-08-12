@@ -3,8 +3,9 @@
 ## Table of Contents
 
 - [Description](#description)
-- [Architecture and Pattern](#architecture-and-pattern)
+- [Architecture](#architecture)
 - [Endpoints and URL](#endpoints-and-url)
+- [Supported Query Parameters by Search Service](#supported-query-parameters-by-search-service)
 - [Response Codes](#response-codes)
 - [Pre-requisite](#pre-requisite)
 - [Local Build](#local-build)
@@ -12,16 +13,15 @@
 - [Run Junits](#run-junits)
 - [Spring Profile](#spring-profile)
 - [Local Run](#local-run)
-- [Supported Query Parameters by Search Service](#supported-query-parameters-by-search-service)
 - [Swagger Page](#swagger-page)
 
 
 ## Description
 Rest interface that allows searching of handset details by providing required criteria as part of query parameters.
 
-## Architecture and Pattern
+## Architecture
 
-- This service developed using Spring Boot which allows easy injection of dependent objects. Internally uses Spring RestTemplate to fetch details details service.
+- This service developed using Spring Boot which allowed easy injection of dependent objects using Spring IOC. Internally uses Spring RestTemplate to fetch details details service.
 <br/>
 
 ## Endpoints and URL
@@ -30,6 +30,22 @@ Rest interface that allows searching of handset details by providing required cr
 | ------ | -------------- |
 | GET    | /mobile/search?|
 <br/>
+
+## Supported Query Parameters by Search Service
+
+| Parameter Name |
+| -------------- |
+| announceDate   |
+| audioJack      |
+| battery        |
+| brand          |
+| gps            |
+| id             |
+| phone          |
+| picture        |
+| priceEur       |
+| resolution     |
+| sim            |
 
 ## Response Codes
 
@@ -50,7 +66,7 @@ This service can run locally after checking out code from github using both **gr
 Building this API is as simple as running commands below
 
  `git clone https://github.com/vishuu1101/handset-details-api.git` <br/>
- `cd handset-details-api`
+ `cd handset-details-api` <br/>
  `gradle.bat clean build`
  
 ## Code Formatting
@@ -85,22 +101,6 @@ Running below commands start the service on port 8080 by default which can be ch
   After building the jar navigate to build/libs directory and run the following command
 
  `java -jar -Dspring.profiles.active=local -Dserver.port=8081 handset-details-api.jar`
- 
-## Supported Query Parameters by Search Service
-
-| Parameter Name |
-| -------------- |
-| announceDate   |
-| audioJack      |
-| battery        |
-| brand          |
-| gps            |
-| id             |
-| phone          |
-| picture        |
-| priceEur       |
-| resolution     |
-| sim            |
 
 ## Swagger Page 
 

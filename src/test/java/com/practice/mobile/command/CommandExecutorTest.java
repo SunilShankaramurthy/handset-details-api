@@ -22,17 +22,17 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class CommandExecutorTest {
   @Mock private DataRetrievalService mockDataRetrievalService;
-  private AnnounceDateCommand announceDateCommand;
-  private AudioJackCommand audioJackCommand;
-  private BatteryCommand batteryCommand;
-  private BrandCommand brandCommand;
-  private GPSCommand gpsCommand;
-  private IdCommand idCommand;
-  private PhoneCommand phoneCommand;
-  private PictureCommand pictureCommand;
-  private PriceCommand priceCommand;
-  private ResolutionCommand resolutionCommand;
-  private SimCommand simCommand;
+  private AnnounceDateFilterCommand announceDateFilterCommand;
+  private AudioJackFilterCommand audioJackFilterCommand;
+  private BatteryFilterCommand batteryFilterCommand;
+  private BrandFilterCommand brandFilterCommand;
+  private GPSFilterCommand gpsFilterCommand;
+  private IdFilterCommand idFilterCommand;
+  private PhoneFilterCommand phoneFilterCommand;
+  private PictureFilterCommand pictureFilterCommand;
+  private PriceFilterCommand priceFilterCommand;
+  private ResolutionFilterCommand resolutionFilterCommand;
+  private SimFilterCommand simFilterCommand;
   private CommandExecutor commandExecutor;
   @Rule public ExpectedException expectedException = ExpectedException.none();
 
@@ -41,17 +41,17 @@ public class CommandExecutorTest {
     commandExecutor =
         new CommandExecutor(
             mockDataRetrievalService,
-            new AnnounceDateCommand(),
-            new AudioJackCommand(),
-            new BatteryCommand(),
-            new BrandCommand(),
-            new GPSCommand(),
-            new IdCommand(),
-            new PhoneCommand(),
-            new PictureCommand(),
-            new PriceCommand(),
-            new ResolutionCommand(),
-            new SimCommand());
+            new AnnounceDateFilterCommand(),
+            new AudioJackFilterCommand(),
+            new BatteryFilterCommand(),
+            new BrandFilterCommand(),
+            new GPSFilterCommand(),
+            new IdFilterCommand(),
+            new PhoneFilterCommand(),
+            new PictureFilterCommand(),
+            new PriceFilterCommand(),
+            new ResolutionFilterCommand(),
+            new SimFilterCommand());
   }
 
   @Test

@@ -9,17 +9,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AnnounceDateCommand implements Command {
+public class PhoneFilterCommand implements Command {
 
   @Override
   public List<Handset> execute(List<Handset> handsetList, Map<String, String> queryParams) {
-    List<Handset> list =
-        handsetList.stream()
-            .filter(
-                p ->
-                    StringUtils.containsIgnoreCase(
-                        p.getRelease().getAnnounceDate(), queryParams.get(Constants.ANNOUNCE_DATE)))
-            .collect(Collectors.toList());
-    return list;
+    return handsetList.stream()
+        .filter(p -> StringUtils.containsIgnoreCase(p.getPhone(), queryParams.get(Constants.PHONE)))
+        .collect(Collectors.toList());
   }
 }

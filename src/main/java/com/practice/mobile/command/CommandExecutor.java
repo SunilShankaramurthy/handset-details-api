@@ -20,92 +20,92 @@ import org.springframework.stereotype.Component;
 public class CommandExecutor {
   private static final Logger LOGGER = LogManager.getLogger(CommandExecutor.class);
   private DataRetrievalService dataRetrievalService;
-  private AnnounceDateCommand announceDateCommand;
-  private AudioJackCommand audioJackCommand;
-  private BatteryCommand batteryCommand;
-  private BrandCommand brandCommand;
-  private GPSCommand gpsCommand;
-  private IdCommand idCommand;
-  private PhoneCommand phoneCommand;
-  private PictureCommand pictureCommand;
-  private PriceCommand priceCommand;
-  private ResolutionCommand resolutionCommand;
-  private SimCommand simCommand;
+  private AnnounceDateFilterCommand announceDateFilterCommand;
+  private AudioJackFilterCommand audioJackFilterCommand;
+  private BatteryFilterCommand batteryFilterCommand;
+  private BrandFilterCommand brandFilterCommand;
+  private GPSFilterCommand gpsFilterCommand;
+  private IdFilterCommand idFilterCommand;
+  private PhoneFilterCommand phoneFilterCommand;
+  private PictureFilterCommand pictureFilterCommand;
+  private PriceFilterCommand priceFilterCommand;
+  private ResolutionFilterCommand resolutionFilterCommand;
+  private SimFilterCommand simFilterCommand;
 
   public CommandExecutor(
       DataRetrievalService dataRetrievalService,
-      AnnounceDateCommand announceDateCommand,
-      AudioJackCommand audioJackCommand,
-      BatteryCommand batteryCommand,
-      BrandCommand brandCommand,
-      GPSCommand gpsCommand,
-      IdCommand idCommand,
-      PhoneCommand phoneCommand,
-      PictureCommand pictureCommand,
-      PriceCommand priceCommand,
-      ResolutionCommand resolutionCommand,
-      SimCommand simCommand) {
+      AnnounceDateFilterCommand announceDateFilterCommand,
+      AudioJackFilterCommand audioJackFilterCommand,
+      BatteryFilterCommand batteryFilterCommand,
+      BrandFilterCommand brandFilterCommand,
+      GPSFilterCommand gpsFilterCommand,
+      IdFilterCommand idFilterCommand,
+      PhoneFilterCommand phoneFilterCommand,
+      PictureFilterCommand pictureFilterCommand,
+      PriceFilterCommand priceFilterCommand,
+      ResolutionFilterCommand resolutionFilterCommand,
+      SimFilterCommand simFilterCommand) {
     this.dataRetrievalService = dataRetrievalService;
-    this.announceDateCommand = announceDateCommand;
-    this.audioJackCommand = audioJackCommand;
-    this.batteryCommand = batteryCommand;
-    this.brandCommand = brandCommand;
-    this.gpsCommand = gpsCommand;
-    this.idCommand = idCommand;
-    this.phoneCommand = phoneCommand;
-    this.pictureCommand = pictureCommand;
-    this.priceCommand = priceCommand;
-    this.resolutionCommand = resolutionCommand;
-    this.simCommand = simCommand;
+    this.announceDateFilterCommand = announceDateFilterCommand;
+    this.audioJackFilterCommand = audioJackFilterCommand;
+    this.batteryFilterCommand = batteryFilterCommand;
+    this.brandFilterCommand = brandFilterCommand;
+    this.gpsFilterCommand = gpsFilterCommand;
+    this.idFilterCommand = idFilterCommand;
+    this.phoneFilterCommand = phoneFilterCommand;
+    this.pictureFilterCommand = pictureFilterCommand;
+    this.priceFilterCommand = priceFilterCommand;
+    this.resolutionFilterCommand = resolutionFilterCommand;
+    this.simFilterCommand = simFilterCommand;
   }
 
   public List<Handset> processRequest(Map<String, String> queryParams)
       throws InvalidCriteriaException, ServiceException {
 
-    List<Command> commandList = new ArrayList<>();
+    List<Command> filterCommandList = new ArrayList<>();
     queryParams.keySet().stream()
         .forEach(
             s -> {
               if (Constants.ANNOUNCE_DATE.equals(s)) {
-                commandList.add(announceDateCommand);
+                filterCommandList.add(announceDateFilterCommand);
               }
               if (Constants.AUDIO_JACK.equals(s)) {
-                commandList.add(audioJackCommand);
+                filterCommandList.add(audioJackFilterCommand);
               }
               if (Constants.BATTERY.equals(s)) {
-                commandList.add(batteryCommand);
+                filterCommandList.add(batteryFilterCommand);
               }
               if (Constants.BRAND.equals(s)) {
-                commandList.add(brandCommand);
+                filterCommandList.add(brandFilterCommand);
               }
               if (Constants.GPS.equals(s)) {
-                commandList.add(gpsCommand);
+                filterCommandList.add(gpsFilterCommand);
               }
               if (Constants.ID.equals(s)) {
-                commandList.add(idCommand);
+                filterCommandList.add(idFilterCommand);
               }
               if (Constants.PHONE.equals(s)) {
-                commandList.add(phoneCommand);
+                filterCommandList.add(phoneFilterCommand);
               }
               if (Constants.PICTURE.equals(s)) {
-                commandList.add(pictureCommand);
+                filterCommandList.add(pictureFilterCommand);
               }
               if (Constants.PRICE_EUR.equals(s)) {
-                commandList.add(priceCommand);
+                filterCommandList.add(priceFilterCommand);
               }
               if (Constants.RESOLUTION.equals(s)) {
-                commandList.add(resolutionCommand);
+                filterCommandList.add(resolutionFilterCommand);
               }
               if (Constants.SIM.equals(s)) {
-                commandList.add(simCommand);
+                filterCommandList.add(simFilterCommand);
               }
             });
 
-    if (commandList.isEmpty()) {
+    if (filterCommandList.isEmpty()) {
       throw new InvalidCriteriaException("No valid criteria provided to filter records");
     } else {
-      LOGGER.info("Executing search with " + commandList.size() + " filters");
-      return execute(commandList, queryParams);
+      LOGGER.info("Executing search with " + filterCommandList.size() + " filters");
+      return execute(filterCommandList, queryParams);
     }
   }
 

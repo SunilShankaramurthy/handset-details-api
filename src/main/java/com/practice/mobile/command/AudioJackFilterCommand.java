@@ -9,17 +9,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResolutionCommand implements Command {
+public class AudioJackFilterCommand implements Command {
 
   @Override
   public List<Handset> execute(List<Handset> handsetList, Map<String, String> queryParams) {
-    List<Handset> list =
-        handsetList.stream()
-            .filter(
-                p ->
-                    StringUtils.containsIgnoreCase(
-                        p.getResolution(), queryParams.get(Constants.RESOLUTION)))
-            .collect(Collectors.toList());
-    return list;
+    return handsetList.stream()
+        .filter(
+            p ->
+                StringUtils.containsIgnoreCase(
+                    p.getHardware().getAudioJack(), queryParams.get(Constants.AUDIO_JACK)))
+        .collect(Collectors.toList());
   }
 }
