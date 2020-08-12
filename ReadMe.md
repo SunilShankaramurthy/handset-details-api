@@ -24,6 +24,7 @@ Rest interface that allows searching of handset details by providing required cr
 - This service developed using Spring Boot which allowed easy injection of dependent objects using Spring IOC. Internally uses Spring RestTemplate to fetch details details service.
 <br/>
 - Seq-Flow added [Here](https://github.com/vishuu1101/handset-details-api/blob/master/Handset-Details-API-Seq-Flow.pdf) will explain breifly how api works.
+<br/>
 
 ## Endpoints and URL
 
