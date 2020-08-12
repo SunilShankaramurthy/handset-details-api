@@ -41,7 +41,7 @@ dependencies {
 }
 
 bootRun {
-    args = ["--spring.profiles.active=${profile}"]
+    args = ["--spring.profiles.active=${profile}","--server.port=${port}"]
 }
 
 test {
@@ -56,6 +56,3 @@ spotless {
 }
 
 compileJava.dependsOn spotlessCheck
-
-
-
