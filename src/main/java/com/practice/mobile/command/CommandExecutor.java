@@ -5,15 +5,16 @@ import com.practice.mobile.exception.ServiceException;
 import com.practice.mobile.model.HandsetDetails;
 import com.practice.mobile.service.HandsetDetailsService;
 import com.practice.mobile.util.Constants;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * CommandExecutor class controls the execution of different filters based on provided input
@@ -107,7 +108,7 @@ public class CommandExecutor {
     if (filterCommandList.isEmpty()) {
       throw new InvalidCriteriaException("No valid criteria provided to filter records");
     } else {
-      LOGGER.info("Executing search with " + filterCommandList.size() + " filters");
+      LOGGER.info("Executing search with " + filterCommandList.size() + " filter(s)");
       return execute(filterCommandList, queryParams);
     }
   }
@@ -123,9 +124,7 @@ public class CommandExecutor {
       }
       Criteria criteria =
           new Criteria().andOperator(criteriaList.toArray(new Criteria[criteriaList.size()]));
-
       Query searchQuery = new Query(criteria);
-
       handsetResponseList = handsetDetailsService.searchByCriteria(searchQuery);
       LOGGER.info("Found " + handsetResponseList.size() + " records matching to provided filters.");
     } catch (Exception ex) {
@@ -136,8 +135,8 @@ public class CommandExecutor {
   }
 
   /**
-   * Using this method to replace special characters in query value to avoid obtaining unexpected
-   * results as we are using regex to do wild card search from MongoDB
+   * Using this method to replace special characters in query parameter value to avoid obtaining
+   * unexpected results as we are using regex to do wild card search from MongoDB
    *
    * @param queryParams
    * @return map

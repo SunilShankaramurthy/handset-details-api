@@ -6,8 +6,6 @@ import com.practice.mobile.exception.ServiceException;
 import com.practice.mobile.model.HandsetDetails;
 import com.practice.mobile.model.Hardware;
 import com.practice.mobile.model.Release;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +14,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SearchEndpointTest {

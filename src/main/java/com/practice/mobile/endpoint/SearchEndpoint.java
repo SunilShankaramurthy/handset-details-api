@@ -8,8 +8,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.List;
-import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+
 @Api(tags = "Mobile Service")
 @RestController
 @RequestMapping(value = "/mobile")
 public class SearchEndpoint {
+
+  private static final Logger LOGGER = LogManager.getLogger(SearchEndpoint.class);
 
   private CommandExecutor commandExecutor;
 
@@ -46,7 +53,11 @@ public class SearchEndpoint {
   @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, value = "/search")
   public ResponseEntity searchByCriteria(@RequestParam Map<String, String> queryParameters)
       throws ServiceException, InvalidCriteriaException {
+    Instant before = Instant.now();
     List<HandsetDetails> filteredHandsetList = commandExecutor.processRequest(queryParameters);
+    Instant after = Instant.now();
+    long timeTakenInMillis = Duration.between(before, after).toMillis();
+    LOGGER.info("Request successfully processed in {} milliseconds", timeTakenInMillis);
     return ResponseEntity.status(HttpStatus.OK).body(filteredHandsetList);
   }
 }

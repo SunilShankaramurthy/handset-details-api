@@ -6,9 +6,6 @@ import com.practice.mobile.model.HandsetDetails;
 import com.practice.mobile.model.Hardware;
 import com.practice.mobile.model.Release;
 import com.practice.mobile.service.HandsetDetailsService;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,6 +16,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.mongodb.core.query.Query;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommandExecutorTest {
