@@ -2,14 +2,17 @@ package com.practice.mobile.command;
 
 import com.practice.mobile.exception.InvalidCriteriaException;
 import com.practice.mobile.exception.ServiceException;
-import com.practice.mobile.model.Handset;
-import com.practice.mobile.service.DataRetrievalService;
+import com.practice.mobile.model.HandsetDetails;
+import com.practice.mobile.service.HandsetDetailsService;
 import com.practice.mobile.util.Constants;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommandExecutor {
   private static final Logger LOGGER = LogManager.getLogger(CommandExecutor.class);
-  private DataRetrievalService dataRetrievalService;
+  private HandsetDetailsService handsetDetailsService;
   private AnnounceDateFilterCommand announceDateFilterCommand;
   private AudioJackFilterCommand audioJackFilterCommand;
   private BatteryFilterCommand batteryFilterCommand;
@@ -33,7 +36,7 @@ public class CommandExecutor {
   private SimFilterCommand simFilterCommand;
 
   public CommandExecutor(
-      DataRetrievalService dataRetrievalService,
+      HandsetDetailsService handsetDetailsService,
       AnnounceDateFilterCommand announceDateFilterCommand,
       AudioJackFilterCommand audioJackFilterCommand,
       BatteryFilterCommand batteryFilterCommand,
@@ -45,7 +48,7 @@ public class CommandExecutor {
       PriceFilterCommand priceFilterCommand,
       ResolutionFilterCommand resolutionFilterCommand,
       SimFilterCommand simFilterCommand) {
-    this.dataRetrievalService = dataRetrievalService;
+    this.handsetDetailsService = handsetDetailsService;
     this.announceDateFilterCommand = announceDateFilterCommand;
     this.audioJackFilterCommand = audioJackFilterCommand;
     this.batteryFilterCommand = batteryFilterCommand;
@@ -59,7 +62,7 @@ public class CommandExecutor {
     this.simFilterCommand = simFilterCommand;
   }
 
-  public List<Handset> processRequest(Map<String, String> queryParams)
+  public List<HandsetDetails> processRequest(Map<String, String> queryParams)
       throws InvalidCriteriaException, ServiceException {
 
     List<Command> filterCommandList = new ArrayList<>();
@@ -109,19 +112,43 @@ public class CommandExecutor {
     }
   }
 
-  private List<Handset> execute(List<Command> commandList, Map<String, String> queryParams)
+  private List<HandsetDetails> execute(List<Command> commandList, Map<String, String> queryParams)
       throws ServiceException {
-    List<Handset> handsetResponseList;
+    List<HandsetDetails> handsetResponseList;
+    List<Criteria> criteriaList = new ArrayList<>();
     try {
-      handsetResponseList = dataRetrievalService.getHandsetRecords();
+      queryParams = removeSpecialCharacters(queryParams);
       for (Command command : commandList) {
-        handsetResponseList = command.execute(handsetResponseList, queryParams);
+        criteriaList.add(command.execute(queryParams));
       }
+      Criteria criteria =
+          new Criteria().andOperator(criteriaList.toArray(new Criteria[criteriaList.size()]));
+
+      Query searchQuery = new Query(criteria);
+
+      handsetResponseList = handsetDetailsService.searchByCriteria(searchQuery);
       LOGGER.info("Found " + handsetResponseList.size() + " records matching to provided filters.");
     } catch (Exception ex) {
       LOGGER.error("Command execution failed while processing request", ex);
       throw new ServiceException(ex.getMessage());
     }
     return handsetResponseList;
+  }
+
+  /**
+   * Using this method to replace special characters in query value to avoid obtaining unexpected
+   * results as we are using regex to do wild card search from MongoDB
+   *
+   * @param queryParams
+   * @return map
+   */
+  private Map<String, String> removeSpecialCharacters(Map<String, String> queryParams) {
+    Map<String, String> refreshedMap = new HashMap<>();
+    for (Map.Entry<String, String> entrySet : queryParams.entrySet()) {
+      String key = entrySet.getKey();
+      String value = entrySet.getValue().replaceAll("[^a-zA-Z0-9]", "");
+      refreshedMap.put(key, value);
+    }
+    return refreshedMap;
   }
 }

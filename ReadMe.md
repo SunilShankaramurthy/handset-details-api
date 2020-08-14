@@ -21,8 +21,9 @@ Rest interface that allows searching of handset details by providing required cr
 
 ## Architecture
 
-- This service developed using Spring Boot which allowed easy injection of dependent objects using Spring IOC. Internally uses Spring RestTemplate to fetch details details service.
-- Seq-Flow pdf added [here](https://github.com/vishuu1101/handset-details-api/blob/master/Handset-Details-API-Seq-Flow.pdf) will explain breifly how api works.
+- This service developed using Spring Boot which allowed easy injection of dependent objects using Spring IOC. Internally uses MongoDB to fetch data upon case-insensitive search with provided search criteria.
+Including a DB in design, allowed me to shift all the filtering out of java code.
+- Seq-Flow pdf added [here](https://github.com/vishuu1101/handset-details-api/blob/master/Handset-Details-API-Seq-Flow.pdf) will explain briefly how api works.
 <br/>
 
 ## Endpoints and URL
@@ -59,8 +60,9 @@ Rest interface that allows searching of handset details by providing required cr
 ## Pre-requisite
 
 - Java 8
+- MongoDB either running locally or as a service running in cloud.(I have used (mlab)[https://mlab.com/] provided MongoDB service to implement this functionality.)
 
-This service can run locally after checking out code from github using both **gradle <TASK>** and general **java -jar** as below. As gradle doc suggests, service is build using wrapper to ensure reliable and standardized execution of build. Depending of Operating system we can run serice with gradle.bat or gradlew.
+This service can run locally after checking out code from github using both **gradle <TASK>** and general **java -jar** as below. As gradle doc suggests, service is build using wrapper to ensure reliable and standardized execution of build. Depending of Operating system we can run service with gradle.bat or gradlew.
 
 ## Local Build
 

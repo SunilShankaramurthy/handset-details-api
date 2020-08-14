@@ -3,7 +3,7 @@ package com.practice.mobile.endpoint;
 import com.practice.mobile.command.CommandExecutor;
 import com.practice.mobile.exception.InvalidCriteriaException;
 import com.practice.mobile.exception.ServiceException;
-import com.practice.mobile.model.Handset;
+import com.practice.mobile.model.HandsetDetails;
 import com.practice.mobile.model.Hardware;
 import com.practice.mobile.model.Release;
 import java.util.ArrayList;
@@ -29,21 +29,22 @@ public class SearchEndpointTest {
   }
 
   @Test
-  public void testSearchByPriceValid() throws ServiceException, InvalidCriteriaException {
+  public void testSerachByCriteriaValid() throws ServiceException, InvalidCriteriaException {
     HashMap<String, String> queryParameters = new HashMap<>();
     queryParameters.put("announceDate", "1999");
     queryParameters.put("resolution", "chars");
     Mockito.when(mockCommandExecutor.processRequest(Mockito.anyMap()))
         .thenReturn(filteredHandsetList());
-    ResponseEntity responseEntity = searchEndpoint.searchByPrice(queryParameters);
+    ResponseEntity responseEntity = searchEndpoint.searchByCriteria(queryParameters);
     Assert.assertNotNull("Response from SearchEndpoint is Null", responseEntity);
     Assert.assertEquals(200, responseEntity.getStatusCodeValue());
-    ArrayList<Handset> responseList = (ArrayList<Handset>) responseEntity.getBody();
+    ArrayList<HandsetDetails> responseList = (ArrayList<HandsetDetails>) responseEntity.getBody();
+    Assert.assertNotNull(responseList);
     Assert.assertEquals(1, responseList.size());
   }
 
-  private ArrayList<Handset> filteredHandsetList() {
-    Handset handset = new Handset();
+  private ArrayList<HandsetDetails> filteredHandsetList() {
+    HandsetDetails handset = new HandsetDetails();
     handset.setId("4525");
     handset.setBrand("Lenovo");
     handset.setPhone("Lenovo Amaze");
@@ -60,7 +61,7 @@ public class SearchEndpointTest {
     handset.setRelease(release2);
     handset.setHardware(hardware2);
 
-    ArrayList<Handset> handsetList = new ArrayList<>();
+    ArrayList<HandsetDetails> handsetList = new ArrayList<>();
     handsetList.add(handset);
     return handsetList;
   }

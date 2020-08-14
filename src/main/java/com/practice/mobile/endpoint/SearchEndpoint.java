@@ -3,7 +3,7 @@ package com.practice.mobile.endpoint;
 import com.practice.mobile.command.CommandExecutor;
 import com.practice.mobile.exception.InvalidCriteriaException;
 import com.practice.mobile.exception.ServiceException;
-import com.practice.mobile.model.Handset;
+import com.practice.mobile.model.HandsetDetails;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -39,16 +39,14 @@ public class SearchEndpoint {
         @ApiResponse(
             code = 200,
             message = "Successfully retrieved handset details with the filters provided",
-            response = Handset.class),
+            response = HandsetDetails.class),
         @ApiResponse(code = 400, message = "No records found for specified filters"),
         @ApiResponse(code = 500, message = "Internal Error")
       })
   @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, value = "/search")
-  public ResponseEntity searchByPrice(@RequestParam Map<String, String> queryParameters)
+  public ResponseEntity searchByCriteria(@RequestParam Map<String, String> queryParameters)
       throws ServiceException, InvalidCriteriaException {
-    List<Handset> filteredHandsetList = commandExecutor.processRequest(queryParameters);
-    ResponseEntity<List<Handset>> responseEntity =
-        ResponseEntity.status(HttpStatus.OK).body(filteredHandsetList);
-    return responseEntity;
+    List<HandsetDetails> filteredHandsetList = commandExecutor.processRequest(queryParameters);
+    return ResponseEntity.status(HttpStatus.OK).body(filteredHandsetList);
   }
 }
