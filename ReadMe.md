@@ -23,7 +23,7 @@ Rest interface that allows searching of handset details by providing required cr
 
 - This service developed using Spring Boot which allowed easy injection of dependent objects using Spring IOC. Internally uses MongoDB to fetch data upon case-insensitive search with provided search criteria.
 Including a DB in design, allowed me to shift all the filtering out of java code.
-- Seq-Flow pdf added [here](https://github.com/vishuu1101/handset-details-api/blob/master/Handset-Details-API-Seq-Flow.pdf) will explain briefly how api works.
+- Seq-Flow pdf added [here](https://github.com/vishuu1101/handset-details-api/blob/mongo-database/Handset-Details-API%20with%20DB-Seq-Flow.pdf) will explain briefly how api works.
 <br/>
 
 ## Endpoints and URL
