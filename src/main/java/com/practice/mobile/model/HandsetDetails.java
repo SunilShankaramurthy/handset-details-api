@@ -1,10 +1,12 @@
 package com.practice.mobile.model;
 
-import springfox.documentation.annotations.ApiIgnore;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@ApiIgnore
-public class Handset {
-
+@Document(collection = "HANDSET_DETAILS")
+public class HandsetDetails {
+  @Id private ObjectId _id;
   private String id;
   private String brand;
   private String phone;
